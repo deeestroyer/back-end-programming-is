@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name  = "cart_items")
@@ -21,15 +22,20 @@ public class CartItem {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "cart_id", nullable = false)
-    private Cart carts;
-
+    @JoinColumn(name = "vacation_id", nullable = false)
     @Column(name = "vacation_id")
     private Vacation vacation;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cartItem")
+    @ManyToMany
+    @JoinTable(
+            name = "excursion_cartitem",
+            joinColumns = @JoinColumn(name = "cart_item_id"),
+            inverseJoinColumns = @JoinColumn(name = "excursion_id")
+    )
     private Set<Excursion> excursion;
 
+    @ManyToOne
+    @JoinColumn(name = "cart_id", nullable = false)
     @Column(name = "cart_id")
     private Cart cart;
 

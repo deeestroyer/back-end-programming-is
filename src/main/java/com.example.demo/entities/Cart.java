@@ -30,6 +30,8 @@ public class Cart {
     @Column(name = "party_size")
     private int party_size;
 
+    //Cart pendingOrder = new card(StatusType.PENDING);  example
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private StatusType status;
 
@@ -41,10 +43,12 @@ public class Cart {
     @UpdateTimestamp
     private Date last_update;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
     @Column(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "carts")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
     private Set<CartItem> cartItem;
 
 }
