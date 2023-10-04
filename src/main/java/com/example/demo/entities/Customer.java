@@ -46,7 +46,7 @@ public class Customer {
 
     @ManyToOne
     @JoinColumn(name = "division_id", nullable = false)
-    @Column(name = "division_id")
+    //@Column(name = "division_id")
     private Division division;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")

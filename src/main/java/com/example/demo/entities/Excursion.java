@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
@@ -23,6 +24,9 @@ public class Excursion {
     @Column(name = "excursion_title")
     private String excursion_title;
 
+    @Column(name = "excursion_price")
+    private BigDecimal excursion_price;
+
     @Column(name = "image_url")
     private String image_url;
 
@@ -36,7 +40,7 @@ public class Excursion {
 
     @ManyToOne
     @JoinColumn(name = "vacation_id", nullable = false)
-    @Column(name = "vacation_id")
+    //@Column(name = "vacation_id")
     private Vacation vacation;
 
     @ManyToMany(mappedBy = "excursion")

@@ -32,7 +32,7 @@ public class Division {
     private Date last_update;
 
     @ManyToOne
-    @JoinColumn(name = "country_id", nullable = false)
+    @JoinColumn(name = "country_id", nullable = false, insertable=false, updatable=false)
     private Country country;
 
     @Column(name = "country_id")
