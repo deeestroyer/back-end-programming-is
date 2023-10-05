@@ -29,21 +29,18 @@ public class RestDataConfig implements RepositoryRestConfigurer {
      * <p>
      * Set page configuration parameters
      *
-     * @param config
-     * @param cors
+     * @param config;
+     * @param cors;
      */
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
         config.exposeIdsFor(Country.class);
         config.exposeIdsFor(Customer.class);
-        config.exposeIdsFor(Cart.class);
-        config.exposeIdsFor(CartItem.class);
         config.exposeIdsFor(Division.class);
         config.exposeIdsFor(Excursion.class);
         config.exposeIdsFor(Vacation.class);
         config.setDefaultPageSize(Integer.MAX_VALUE);
         config.setMaxPageSize(Integer.MAX_VALUE);
-
 
     }
 }

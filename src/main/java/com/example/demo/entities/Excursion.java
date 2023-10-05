@@ -28,7 +28,7 @@ public class Excursion {
     private BigDecimal excursion_price;
 
     @Column(name = "image_url")
-    private String image_url;
+    private String image_URL;
 
     @Column(name = "create_date")
     @CreationTimestamp
@@ -43,6 +43,6 @@ public class Excursion {
     //@Column(name = "vacation_id")
     private Vacation vacation;
 
-    @ManyToMany(mappedBy = "excursion")
+    @ManyToMany(mappedBy = "excursions")
     private Set<CartItem> cartitems;
 }

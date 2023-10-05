@@ -32,7 +32,7 @@ public class CartItem {
             joinColumns = @JoinColumn(name = "cart_item_id"),
             inverseJoinColumns = @JoinColumn(name = "excursion_id")
     )
-    private Set<Excursion> excursion;
+    private Set<Excursion> excursions;
 
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false)
