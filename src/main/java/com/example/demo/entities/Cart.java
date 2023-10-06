@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -30,7 +31,6 @@ public class Cart {
     @Column(name = "party_size")
     private int party_size;
 
-    //Cart pendingOrder = new card(StatusType.PENDING);  example
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private StatusType status;
@@ -51,4 +51,16 @@ public class Cart {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
     private Set<CartItem> cartItem;
 
+    public void add(CartItem item) {
+        if(item != null){
+            if(cartItem == null){
+                cartItem = new HashSet<>();
+            }
+            cartItem.add(item);
+            item.setCart(this);
+        }
+    }
+    public void setStatus(StatusType newStatus) {
+        this.status = newStatus;
+    }
 }
