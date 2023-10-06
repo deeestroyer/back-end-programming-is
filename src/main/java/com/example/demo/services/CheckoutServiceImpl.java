@@ -25,41 +25,45 @@ public class CheckoutServiceImpl implements CheckoutService{
     @Override
     @Transactional
     public PurchaseResponse placeOrder(Purchase purchase) {
-        //retrieve cart
-        System.out.println("here");
-        Cart cart = purchase.getCart();
+        try {
+            //retrieve cart
+            System.out.println("here");
+            Cart cart = purchase.getCart();
 
-        //generate tracking
-        String orderTrackingNumber = generateOrdertrackingNumber();
-        cart.setOrderTrackingNumber(orderTrackingNumber);
+            //generate tracking
+            String orderTrackingNumber = generateOrdertrackingNumber();
+            cart.setOrderTrackingNumber(orderTrackingNumber);
 
-        System.out.println(orderTrackingNumber);
+            //populate cart with cartItems
+            Set<CartItem> cartItems = purchase.getCartItems();
+            if (cartItems.isEmpty()) {
+                throw new IllegalArgumentException("Nothing was added to the cart. Please try again.");
+            }
+            cartItems.forEach(item -> cart.add(item));
 
-        //populate cart with cartItems
-        Set<CartItem> cartItems = purchase.getCartItems();
-        cartItems.forEach(item -> cart.add(item));
+            //populate customer
+            Customer customer = purchase.getCustomer();
+            if (customer == null) {
+                throw new IllegalArgumentException(" Order does not have a customer. ");
+            }
+            customer.add(cart);
 
-        //populate customer
-        Customer customer = purchase.getCustomer();
-        customer.add(cart);
+            //set order status
+            cart.setStatus(StatusType.ordered);
 
-        //save to db
-        customerRepository.save(customer);
+            //save to db
+            customerRepository.save(customer);
 
-        //set order status
-        cart.setStatus(StatusType.ordered);
-
-        //save cart
-        //cartRepository.save(cart);
-
-        //return tracking #
-        return new PurchaseResponse(orderTrackingNumber);
+            //return tracking #
+            return new PurchaseResponse(orderTrackingNumber);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new PurchaseResponse(" Error: " + e.getMessage());
+        }
     }
 
     private String generateOrdertrackingNumber() {
         // generate a tracking number using uuid
-        System.out.println("orderTrackingNumber");
-
         return UUID.randomUUID().toString();
     }
 }
