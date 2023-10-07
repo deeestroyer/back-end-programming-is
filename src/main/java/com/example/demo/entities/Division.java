@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -14,6 +15,14 @@ import java.util.Set;
 @Getter
 @Setter
 public class Division {
+
+    public Division(){
+
+    }
+
+    public Division(Long id){
+        this.id = id;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,14 +44,27 @@ public class Division {
     @JoinColumn(name = "country_id", nullable = false, insertable=false, updatable=false)
     private Country country;
 
-    @Column(name = "country_id")
-    private Long countryID;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "division")
+    private Set<Customer> customers = new HashSet<>();
+
+    @Column(name = "Country_ID")
+    private Long country_id;
 
     public void setCountry(Country country){
-        setCountryID(country.getId());
+        setCountry_id(country.getId());
         this.country = country;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "division")
-    private Set<Customer> customers;
+    public Set<Customer> getCustomers(){
+        return customers;
+    }
+    public void add(Customer customer) {
+        if(customer != null){
+            if(customers == null){
+                customers = new HashSet<>();
+            }
+            customers.add(customer);
+            customer.setDivision(this);
+        }
+    }
 }

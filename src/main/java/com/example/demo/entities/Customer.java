@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -16,6 +17,18 @@ import java.util.Set;
 @Getter
 @Setter
 public class Customer {
+
+    public Customer(){
+
+    }
+    public Customer(String firstName, String lastName, String address, String postal_code, String phone, Division division) {
+        this.firstName = firstName;
+        this.lastName  = lastName;
+        this.address = address;
+        this.postal_code = postal_code;
+        this.phone = phone;
+        this.division = division;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,11 +59,11 @@ public class Customer {
     private Date last_update;
 
     @ManyToOne
-    @JoinColumn(name = "division_id", nullable = false, insertable=false, updatable=false)
+    @JoinColumn(name = "division_id") //, nullable = false, insertable=false, updatable=false
     private Division division;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
-    private Set<Cart> carts;
+    private Set<Cart> carts = new HashSet<>();
 
     public void add(Cart cart) {
         if(cart != null){

@@ -23,7 +23,6 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "vacation_id", nullable = false)
-    //@Column(name = "vacation_id")
     private Vacation vacation;
 
     @ManyToMany
@@ -36,7 +35,6 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable = false)
-    //@Column(name = "cart_id")
     private Cart cart;
 
     @Column(name = "create_date")

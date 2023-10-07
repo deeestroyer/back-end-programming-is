@@ -18,7 +18,6 @@ public class CheckoutServiceImpl implements CheckoutService{
 
     @Autowired
     public CheckoutServiceImpl(CustomerRepository customerRepository) {
-        System.out.println("here");
         this.customerRepository = customerRepository;
     }
 
@@ -27,7 +26,6 @@ public class CheckoutServiceImpl implements CheckoutService{
     public PurchaseResponse placeOrder(Purchase purchase) {
         try {
             //retrieve cart
-            System.out.println("here");
             Cart cart = purchase.getCart();
 
             //generate tracking
